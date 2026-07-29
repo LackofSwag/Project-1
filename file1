@@ -1,0 +1,14 @@
+word_dict = {
+    "word1": "1",
+    "word2": "2"
+}
+
+name = 5
+
+for x in range(name):
+    num = input("Wpisz slowo: ")
+
+    if num in word_dict.keys():
+        print(word_dict[num])
+    else:
+        print("nie znalezione")
