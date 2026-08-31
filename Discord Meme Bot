@@ -1,0 +1,51 @@
+import discord
+import requests
+import random
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'Zalogowaliśmy się jako {bot.user}')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Cześć, jestem bot{bot.user}!')
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def user_list(ctx):
+    members = ctx.guild.members
+    text = "\n".join(member.name for member in members)
+    await ctx.send(f"Użytkownicy na serwerze:\n{text}")
+
+@bot.command()
+async def mem(ctx):
+    mem_random = random.randint(1, 3)
+    with open(f'images/mem{mem_random}.jpg', 'rb') as f:
+# Zapiszmy przekonwertowany plik biblioteki Discord w tej zmiennej!
+        picture = discord.File(f)
+# Możemy następnie wysłać ten plik jako parametr!
+    await ctx.send(file=picture)
+
+def get_duck_image_url():
+    url = 'https://randomfox.ca/floof/'
+    res = requests.get(url)
+    data = res.json()
+    return data['image']
+
+
+@bot.command('duck')
+async def duck(ctx):
+    '''Po wywołaniu polecenia duck program wywołuje funkcję get_duck_image_url'''
+    image_url = get_duck_image_url()
+    await ctx.send(image_url)
+
+bot.run("MTUzNzEwMjIyODE0NDM5ODM3Ng.GYmY9Q.wlaUCtG-owcXHNw68t2KKwAwpkn2YguOKd89gA")
