@@ -1,0 +1,22 @@
+from flask import Flask
+import random
+app = Flask(__name__)
+
+@app.route('/random_fact')
+def funkcja():
+    lista = ["Wiekszosc ludzi sa uzaleznieni od internetu", "Woda jest niezbędna do życia", "Ziemia jest trzecia planetą od Słońca"]
+    return f'<p>{random.choice(lista)}</p>'
+
+@app.route('/losowy_numer')
+def losowy_numer():
+    return f'<p>{random.randint(1, 100)}</p>'
+
+@app.route("/google")
+def google():
+    return "<h1>Strona Google</h1> <a href='/'>Powrót do strony głównej</a>"
+
+@app.route("/")
+def home(): 
+    return "<h1>Strona główna</h1> <a href='/random_fact'>Wyświetl losowy fakt!</a> <a href='/losowy_numer'>Losowy Numer</a>"
+
+app.run(debug=True)
